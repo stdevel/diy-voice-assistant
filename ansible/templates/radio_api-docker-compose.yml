@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  radio:
+      container_name: stdevel/radio_api:latest
+      image: radio
+      ports:
+          - "5000:5000"
+      devices:
+          - "/dev/snd:/dev/snd"
+      restart: unless-stopped

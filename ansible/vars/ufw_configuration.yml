@@ -1,0 +1,5 @@
+ufw_rules:
+  - { port: 22, rule: allow, comment: 'Allow SSH' }
+  - { port: 12101, rule: allow, comment: 'Allow Rhasspy' }
+  - { port: 5000, rule: allow, comment: 'Allow radio_api' }
+  - { from_ip: '127.0.0.1/8', comment: 'Allow localhost' }
