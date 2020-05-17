@@ -1,0 +1,14 @@
+# admin
+user admin
+topic readwrite #
+topic readwrite $SYS/#
+
+# operator
+user operator
+topic read #
+topic read $SYS/#
+
+# sensor_bath
+user sensor_bath
+topic readwrite bath/temperature
+topic readwrite bath/humidity

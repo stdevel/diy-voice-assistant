@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto:latest
+    ports:
+      - "1883:1883/tcp"
+    volumes:
+       - "./mosquitto.conf:/mosquitto/config/mosquitto.conf"
+       - "./conf.d:/mosquitto/config/conf.d"
+       - "/mosquitto/data"
+       - "/mosquitto/log"
+    restart: unless-stopped
