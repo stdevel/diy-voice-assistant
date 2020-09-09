@@ -2,8 +2,8 @@ version: "3"
 
 services:
   radio:
-      container_name: stdevel/radio_api:latest
-      image: radio
+      container_name: radio
+      image: stdevel/radio_api:latest
       ports:
           - "5000:5000"
       devices:
