@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  node-red:
+    container_name: nodered
+    image: nodered/node-red:latest
+    ports:
+      - "1880:1880/tcp"
+    environment:
+      TZ: 'Europe/Berlin'
+    volumes:
+       - node-red-data
+    restart: unless-stopped
