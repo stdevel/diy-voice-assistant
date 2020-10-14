@@ -3,7 +3,7 @@ version: "3"
 services:
   rhasspy:
       container_name: rhasspy
-      image: "synesthesiam/rhasspy-server:latest"
+      image: "rhasspy/rhasspy:latest"
       ports:
           - "12101:12101"
       volumes:
