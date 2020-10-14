@@ -1,2 +1,2 @@
 [assistants]
-<ip-address>
+<ip_address> ansible_ssh_user=ubuntu
