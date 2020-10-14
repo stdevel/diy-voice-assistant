@@ -1,7 +1,9 @@
 ---
 - hosts: assistants
-  remote_user: pi
+  remote_user: ubuntu
   become: true
+  vars:
+    target_user: ubuntu
   pre_tasks:
     - name: Load firewall configuration
       include_vars: ufw_configuration.yml
@@ -31,69 +33,80 @@
         name: vm.swappiness
         value: '0'
         sysctl_file: /etc/sysctl.d/99-local.conf
-        reload: yes
+        reload: true
     - name: Clone seeed-voicecard driver
       git:
         repo: https://github.com/respeaker/seeed-voicecard.git
-        dest: /home/pi/seeed-voicecard
-        update: no
+        dest: "/home/{{ target_user }}/seeed-voicecard"
+        update: false
       become: false
-    - name: Remove broken Python module
-      pip:
-        name: backports.ssl_match_hostname
-        state: absent
-    - name: Install working Python module
-      apt:
-        name:
-          - python-backports.ssl-match-hostname
+    - name: Fix Python SSL modules
+      block:
+        - name: Remove broken Python module
+          pip:
+            name: backports.ssl_match_hostname
+            state: absent
+        - name: Install working Python module
+          apt:
+            name:
+              - python-backports.ssl-match-hostname
+      when: ansible_distribution == "Debian"
     - name: Install required PIP modules
       pip:
         name:
           - docker
           - pixel_ring
           - gpiozero
+    - name: Install docker.io
+      apt:
+        name:
+          - docker.io
+          - docker-compose
+      when:
+        - ansible_distribution == "Ubuntu"
+        - ansible_distribution_version == "20.04"
     - name: Download Docker images
       docker_image:
         name: "{{ item }}"
         source: pull
       with_items:
         - stdevel/radio_api:latest
-        - synesthesiam/rhasspy-server:latest
+        - rhasspy/rhasspy:latest
+        - nodered/node-red
     - name: Create Docker networks
       docker_network:
         name: "{{ item }}"
       with_items:
-        - rhasspy_default
         - radio_api_default
+        - rhasspy_default
+        - nodered_default
     - name: Create configuration directories
       file:
         path: "{{ item }}"
-        owner: pi
-        group: pi
+        owner: "{{ target_user }}"
+        group: "{{ target_user }}"
         mode: '0750'
         state: directory
       with_items:
-        - /home/pi/rhasspy
-        - /home/pi/radio_api
-    - name: Stage Rhasspy configuration
-      template:
-        src: rhasspy-docker-compose.yml
-        dest: /home/pi/rhasspy/docker-compose.yml
-        owner: pi
-        group: pi
+        - radio_api
+        - rhasspy
+        - node-red
+    - name: Stage container configuration files
+      copy:
+        src: "templates/{{ item }}-docker-compose.yml"
+        dest: "/home/{{ target_user }}/{{ item }}/docker-compose.yml"
+        owner: "{{ target_user }}"
+        group: "{{ target_user }}"
         mode: '0644'
-    - name: Stage radio_api configuration
-      template:
-        src: radio_api-docker-compose.yml
-        dest: /home/pi/radio_api/docker-compose.yml
-        owner: pi
-        group: pi
-        mode: '0644'
-
+      loop:
+        - radio_api
+        - rhasspy
+        - node-red
 
 
   roles:
     - role: nickjj.docker
       docker__apt_repository: "deb [arch=armhf] https://download.docker.com/linux/debian buster stable"
+      when: ansible_distribution == "Debian"
     - role: weareinteractive.ufw
       ufw_reset: true

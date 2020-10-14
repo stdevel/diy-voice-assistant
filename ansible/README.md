@@ -70,8 +70,12 @@ You should now be able to access the applications via the following links:
   - Audio Playing > aplay
   - Intent Handling > Remote HTTP
     - Remote URL: [http://ip-address:1880/intent](http://ip-address:1880/intent)
-
-> Save Settings
+- Save Settings
+- F5
+- Download
+- Sentences
+  - Import from [sentences.ini](templates/sentences.ini)
+  - Save
 
 ## TODOs
 
