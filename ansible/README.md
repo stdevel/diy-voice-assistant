@@ -2,7 +2,7 @@
 
 This playbook prepares the Raspberry Pi for use as voice assistant with [Rhasspy](https://github.com/synesthesiam/rhasspy) and [Node-RED](https://nodered.org). Both applications will be running on [Docker CE](https://docs.docker.com/get-docker/). It also stages driver files for a [ReSpeaker](https://respeaker.io) voice card and starts an [online radio Docker container](https://github.com/stdevel/radio_api).
 
-[Ubuntu Server](https://ubuntu.com/download/raspberry-pi) is the preferenced distribution as it has stable 64-bit support but [Raspbian](https://raspbian.org) is also possible.
+[Raspberry Pi OS (*aka Raspbian*)](https://raspbian.org) is the preferenced distribution as it is more stable and offers better driver support for the ReSpeaker, but [Ubuntu Server](https://ubuntu.com/download/raspberry-pi) should also be possible.
 
 ## Dependencies
 

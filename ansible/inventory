@@ -1,2 +1,2 @@
 [assistants]
-<ip_address> ansible_ssh_user=ubuntu
+<ip_address> ansible_ssh_user=pi

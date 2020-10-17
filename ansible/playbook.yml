@@ -1,9 +1,8 @@
 ---
 - hosts: assistants
-  remote_user: ubuntu
   become: true
   vars:
-    target_user: ubuntu
+    target_user: pi
   pre_tasks:
     - name: Load firewall configuration
       include_vars: ufw_configuration.yml
