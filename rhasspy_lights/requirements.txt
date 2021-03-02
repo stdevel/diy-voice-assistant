@@ -1,0 +1,3 @@
+pixel-ring
+gpiozero
+paho-mqtt

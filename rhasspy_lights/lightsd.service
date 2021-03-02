@@ -1,0 +1,15 @@
+[Unit]
+Description=Run lights.py as user
+DefaultDependencies=no
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=30
+User=pi
+Group=pi
+ExecStart=/home/pi/lights.py
+
+[Install]
+WantedBy=default.target

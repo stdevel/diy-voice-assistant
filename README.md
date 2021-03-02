@@ -8,3 +8,4 @@ For more details, check-out the blog series: [https://cstan.io](https://cstan.io
 
 - [`ansible`](ansible) - Ansible playbook for deploying Docker + Rhasspy + Node-RED on Raspberry Pi
 - [`node-red`](node-red) - Node-RED flows (*handler, etc.*)
+- [`rhasspy_lights`](rhasspy_lights) - Simple lights daemon
