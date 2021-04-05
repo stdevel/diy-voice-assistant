@@ -1,0 +1,52 @@
+---
+- name: Clean-up Ubuntu installation
+  hosts: ubuntu
+  become: true
+  tasks:
+    - name: Remove unneeded packages
+      apt:
+        name:
+          - apport
+          - fwupd
+          - lvm2
+          - multipath-tools
+          - snapd
+          - byobu
+          - bolt
+          - ed
+          - mdadm
+          - ntfs-3g
+          - popularity-contest
+          - screen
+        state: absent
+    - name: Install needed packages
+      apt:
+        name:
+          - sg3-utils
+    - name: Disable unneeded services
+      service:
+        name: "{{ item }}"
+        state: stopped
+        enabled: false
+      loop:
+        - snap.lxd.activate.service
+        - lvm2-lvmpolld.service
+        - apport.service
+    - name: Remove annoying MOTD advertisement
+      block:
+        - name: Disable motd-time
+          lineinfile:
+            path: /etc/default/motd-news
+            regexp: '^ENABLED='
+            line: ENABLED=0
+          ignore_errors: true
+        - name: Disable service and timer
+          systemd:
+            name: "{{ item }}"
+            state: stopped
+            enabled: false
+            masked: true
+            daemon_reload: true
+          loop:
+            - motd-news.service
+            - motd-news.timer

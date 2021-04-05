@@ -4,6 +4,8 @@ This playbook prepares the Raspberry Pi for use as voice assistant with [Rhasspy
 
 [Raspberry Pi OS (*aka Raspbian*)](https://raspbian.org) is the preferenced distribution as it is more stable and offers better driver support for the ReSpeaker, but [Ubuntu Server](https://ubuntu.com/download/raspberry-pi) should also be possible. Please not that conventional Debian **won't work**.
 
+If you want to slim-down your Ubuntu installation, there is also an [Ansible Playbook](ansible/cleanup_ubuntu.yml).
+
 ## Dependencies
 
 The following Ansible roles are used:
