@@ -2,7 +2,7 @@
 
 This playbook prepares the Raspberry Pi for use as voice assistant with [Rhasspy](https://github.com/synesthesiam/rhasspy) and [Node-RED](https://nodered.org). Both applications will be running on [Docker CE](https://docs.docker.com/get-docker/). It also stages driver files for a [ReSpeaker](https://respeaker.io) voice card and starts an [online radio Docker container](https://github.com/stdevel/radio_api).
 
-[Raspberry Pi OS (*aka Raspbian*)](https://raspbian.org) is the preferenced distribution as it is more stable and offers better driver support for the ReSpeaker, but [Ubuntu Server](https://ubuntu.com/download/raspberry-pi) should also be possible.
+[Raspberry Pi OS (*aka Raspbian*)](https://raspbian.org) is the preferenced distribution as it is more stable and offers better driver support for the ReSpeaker, but [Ubuntu Server](https://ubuntu.com/download/raspberry-pi) should also be possible. Please not that conventional Debian **won't work**.
 
 ## Dependencies
 
@@ -48,7 +48,7 @@ $ sudo bash
 Once finished, reboot the system:
 
 ```shell
-# sudo reboot
+# reboot
 ```
 
 You should now be able to access the applications via the following links:
@@ -67,9 +67,13 @@ You should now be able to access the applications via the following links:
   - Speech to Text > Pocketsphinx
   - Intent Recognition > Fsticuffs
   - Text to Speech > NanoTTS
+    - for MaryTTS: [http://marytts:59125/process](http://marytts:59125/process)
   - Audio Playing > aplay
   - Intent Handling > Remote HTTP
     - Remote URL: [http://ip-address:1880/intent](http://ip-address:1880/intent)
+  - Sounds
+    - Wake WAV: `/usr/lib/rhasspy/.venv/lib/python3.7/site-packages/snowboy/resources/ding.wav`
+    - Recorded WAV: `/usr/lib/rhasspy/.venv/lib/python3.7/site-packages/snowboy/resources/dong.wav`
 - Save Settings
 - F5
 - Download

@@ -6,6 +6,7 @@ services:
       image: "rhasspy/rhasspy:latest"
       ports:
           - "12101:12101"
+          - "12183:12183"
       volumes:
           - "./profiles:/profiles"
       devices:

@@ -1,5 +1,6 @@
 ---
-- hosts: assistants
+- name: Prepare DIY voice assistant
+  hosts: assistants
   become: true
   vars:
     target_user: pi
@@ -11,7 +12,6 @@
         name:
           - git
           - htop
-          - screen
           - vim
           - libffi-dev
           - libssl-dev
