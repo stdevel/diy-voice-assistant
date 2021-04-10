@@ -123,6 +123,9 @@ def connect_mqtt(username, password, hostname, port) -> mqtt_client:
     """
     client_id = "rhasspy_lights"
 
+    def on_disconnect(client, userdata, return_code):
+        LOGGER.error("Connection to MQTT broker lost")
+
     def on_connect(client, userdata, flags, return_code):
         if return_code == 0:
             LOGGER.info("Connected to MQTT Broker!")
@@ -132,6 +135,7 @@ def connect_mqtt(username, password, hostname, port) -> mqtt_client:
     client = mqtt_client.Client(client_id)
     client.username_pw_set(username, password)
     client.on_connect = on_connect
+    client.on_disconnect = on_disconnect
     client.connect(hostname, port)
     return client
 
@@ -140,6 +144,17 @@ def subscribe(client: mqtt_client, topics):
     """
     This function subscribes to a MQTT topic
     """
+    def on_connect(client, userdata, flags, return_code):
+        if return_code == 0:
+            LOGGER.info("Connected to MQTT Broker and subscribed topics")
+            # subscribe to topics again
+            client.subscribe(topics)
+        else:
+            LOGGER.error("Failed to connect, return code %d\n", return_code)
+
+    def on_disconnect(client, userdata, return_code):
+        LOGGER.info("Subscription lost")
+
     def on_message(client, userdata, msg):
         LOGGER.debug(
             "Received '%s' from '%s' topic",
@@ -164,6 +179,8 @@ def subscribe(client: mqtt_client, topics):
     # add callback
     client.subscribe(topics)
     client.on_message = on_message
+    client.on_connect = on_connect
+    client.on_disconnect = on_disconnect
 
 
 def start_subscribe(options):
