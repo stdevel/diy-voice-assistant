@@ -1,0 +1,15 @@
+[Unit]
+Description=Run timer_app.py as user
+DefaultDependencies=no
+After=network.target
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=30
+User=pi
+Group=pi
+ExecStart=/home/pi/timer_app.py --port 12183
+
+[Install]
+WantedBy=default.target
