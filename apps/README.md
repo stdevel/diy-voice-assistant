@@ -19,3 +19,16 @@ Applications can be launched as systemd unit:
 # systemctl daemon-reload
 # systemctl enable --now <name>.service
 ```
+
+## `timer_app`
+
+Don't forget to add lines like this to `sentences.ini`:
+
+```ini
+[StartTimer]
+Stelle den Timer auf (1..100){minutes} (Minute|Minuten)
+Stelle den Timer auf (1..90){seconds} (Sekunde|Sekunden)
+
+[StopTimer]
+Stoppe den Timer
+```
